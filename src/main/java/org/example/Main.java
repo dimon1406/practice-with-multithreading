@@ -31,10 +31,15 @@ class BankVault{
     }
 
     public synchronized void increaseBalance(int dep){
-        while(dep>0){
-            balance+=10;
-            dep-=10;
+        try {
+            System.out.println("Кассир начал класть деньги в сейф");
+            while (dep > 0) {
+                balance += 10;
+                dep -= 10;
+            }
+            Thread.sleep(3000);
         }
+        catch(Exception e){}
     }
 }
 
@@ -56,7 +61,6 @@ class Cashier implements Runnable{
         try {
             sem.acquire();
             System.out.println("кассир " + name + " начал работать");
-            System.out.println("Кассир начал класть деньги в сейф");
             bank.increaseBalance(dep);
             Thread.sleep(5000);
         }
